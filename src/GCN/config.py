@@ -10,7 +10,6 @@ class GCNConfig(ModelConfig):
         self.dataset = args.dataset
         self.lr = 0.01
         self.dropout = 0.5
-        self.n_hidden = 64
         self.n_layer = 2
         self.n_hidden = 256
         self.weight_decay = 5e-4
