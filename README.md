@@ -17,7 +17,7 @@ A DGL-GCN implementation with batch norm added and settings copied from OGB-Arxi
 python train.py -darxiv # For arxiv default split
 python train.py -dcora # For cora default split
 ```
-
+Model settings are stored in the src/GCN/config.py
 
 
 ## Model
