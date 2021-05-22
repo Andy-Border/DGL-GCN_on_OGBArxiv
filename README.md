@@ -81,7 +81,3 @@ Finished running train_gcn at 05-22 10:32:54, running time = 40.15s.
 ```
 
 The above results are obtained on the exact the same settings of ogbn-arxiv. When the n_layer is set as 1 (i.e. two message passing layers), with n_hidden set as 128, the early stopped accuracy is 0.8120 , which is quite close to the reported results in the original paper (81.50).
-
-0.8120
-
-
