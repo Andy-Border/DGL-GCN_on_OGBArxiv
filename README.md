@@ -57,13 +57,13 @@ Config: {'birth_time': '05_22-10_18_58', 'dataset': 'arxiv', 'dropout': 0.5, 'ea
 Finished running train_gcn at 05-22 10:20:32, running time = 1.56min.
 ```
 
-As we can observe, the performance is significantly worse than
-
-[the reported results of OGB]: https://ogb.stanford.edu/docs/leader_nodeprop/
+As we can observe, the performance is significantly worse than the reported results of OGB: https://ogb.stanford.edu/docs/leader_nodeprop/
 
 ![image-20210522103520100](assets/image-20210522103520100.png)
 
 ## Performance on Cora
+
+However, this implementation seems to be correct, since the performance on Cora dataset is normal:
 
 The performance of last 5 epochs:
 
@@ -79,4 +79,9 @@ Results:{'test_acc': '0.7630', 'val_acc': '0.7120'}
 Config: {'birth_time': '05_22-10_32_14', 'dataset': 'cora', 'dropout': 0.5, 'early_stop': -1, 'epochs': 500, 'exp_name': 'default', 'lr': 0.01, 'model': 'GCN', 'n_hidden': 256, 'n_layer': 2, 'weight_decay': 0.0005}
 Finished running train_gcn at 05-22 10:32:54, running time = 40.15s.
 ```
+
+The above results are obtained on the exact the same settings of ogbn-arxiv. When the n_layer is set as 1 (i.e. two message passing layers), with n_hidden set as 128, the early stopped accuracy is 0.8120 , which is quite close to the reported results in the original paper (81.50).
+
+0.8120
+
 
