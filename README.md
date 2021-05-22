@@ -2,7 +2,7 @@
 
 
 
-A DGL-GCN implementation with batch norm with settings copied from OGB-Arxiv.
+A DGL-GCN implementation with batch norm added and settings copied from OGB-Arxiv.
 
 ## Environment
 
