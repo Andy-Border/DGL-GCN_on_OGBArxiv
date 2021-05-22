@@ -2,7 +2,7 @@
 
 
 
-A DGL-GCN implementation with batch norm with settings copied from OGB-Arxiv.
+A DGL-GCN implementation with batch norm added and settings copied from OGB-Arxiv.
 
 ## Environment
 
@@ -17,7 +17,7 @@ A DGL-GCN implementation with batch norm with settings copied from OGB-Arxiv.
 python train.py -darxiv # For arxiv default split
 python train.py -dcora # For cora default split
 ```
-
+Model settings are stored in the src/GCN/config.py
 
 
 ## Model
@@ -57,13 +57,13 @@ Config: {'birth_time': '05_22-10_18_58', 'dataset': 'arxiv', 'dropout': 0.5, 'ea
 Finished running train_gcn at 05-22 10:20:32, running time = 1.56min.
 ```
 
-As we can observe, the performance is significantly worse than
-
-[the reported results of OGB]: https://ogb.stanford.edu/docs/leader_nodeprop/
+As we can observe, the performance is significantly worse than the reported results of OGB: https://ogb.stanford.edu/docs/leader_nodeprop/
 
 ![image-20210522103520100](assets/image-20210522103520100.png)
 
 ## Performance on Cora
+
+However, this implementation seems to be correct, since the performance on Cora dataset is normal:
 
 The performance of last 5 epochs:
 
@@ -80,3 +80,4 @@ Config: {'birth_time': '05_22-10_32_14', 'dataset': 'cora', 'dropout': 0.5, 'ear
 Finished running train_gcn at 05-22 10:32:54, running time = 40.15s.
 ```
 
+The above results are obtained on the exact the same settings of ogbn-arxiv. When the n_layer is set as 1 (i.e. two message passing layers), with n_hidden set as 128, the early stopped accuracy is 0.8120 , which is quite close to the reported results in the original paper (0.8150).
