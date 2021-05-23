@@ -19,7 +19,7 @@ def exp_init(seed, gpu_id):
     init_random_state(seed)
 
 
-def init_random_state(seed):
+def init_random_state(seed=0):
     # Libraries using GPU should be imported after specifying GPU-ID
     import torch
     import random

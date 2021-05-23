@@ -67,7 +67,7 @@ def preprocess_data(dataset):
         g, labels = dataset[0]
         features = g.ndata['feat']
         nclass = 40
-        labels = labels.squeeze()
+        # labels = labels.squeeze()
     if dataset in ['citeseer']:
         g = dgl.add_self_loop(g)
     return g, features, features.shape[1], nclass, labels, train, val, test

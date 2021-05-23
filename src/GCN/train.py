@@ -13,6 +13,7 @@ import dgl
 from utils.trainer import FullBatchTrainer
 from utils.conf_utils import *
 from utils.data_utils import preprocess_data
+from dgl_implementation.run import Evaluator
 
 
 @time_logger
@@ -25,22 +26,26 @@ def train_gcn(args):
     # ! Load Graph
     g, features, n_feat, cf.n_class, labels, train_x, val_x, test_x = preprocess_data(cf.dataset)
     features = features.to(cf.device)
+    g = dgl.to_bidirected(g)
     g = dgl.add_self_loop(g).to(cf.device)
     supervision = SimpleObject({'train_x': train_x, 'val_x': val_x, 'test_x': test_x, 'labels': labels})
 
     # ! Train Init
     print(f'{cf}\nStart training..')
-    model = GCN(g, n_feat, cf.n_hidden, cf.n_class, cf.n_layer, F.relu, cf.dropout)
+    model = GCN(n_feat, cf.n_hidden, cf.n_class, cf.n_layer, F.relu, cf.dropout)
     model.to(cf.device)
     print(model)
     optimizer = th.optim.Adam(
         model.parameters(), lr=cf.lr, weight_decay=cf.weight_decay)
 
-
+    _evaluator = Evaluator(name='ogbn-arxiv')
+    evaluator = lambda pred, labels: _evaluator.eval(
+        {"y_pred": pred.argmax(dim=-1, keepdim=True), "y_true": labels}
+    )["acc"]
     # ! Train
     trainer = FullBatchTrainer(model=model, g=g, cf=cf, features=features,
                                sup=supervision, stopper=None, optimizer=optimizer,
-                               loss_func=th.nn.CrossEntropyLoss())
+                               loss_func=th.nn.CrossEntropyLoss(), evaluator=evaluator)
     trainer.run()
     trainer.eval_and_save()
 
@@ -49,10 +54,10 @@ def train_gcn(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Training settings")
-    dataset = 'pubmed'
-    dataset = 'citeseer'
     dataset = 'arxiv'
     dataset = 'cora'
+    dataset = 'pubmed'
+    dataset = 'citeseer'
     # ! Settings
     parser.add_argument("-g", "--gpu", default=0, type=int, help="GPU id to use.")
     parser.add_argument("-d", "--dataset", type=str, default=dataset)
